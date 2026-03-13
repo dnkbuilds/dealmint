@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Download DealMint App</title>
+  <meta name="theme-color" content="#111210"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root { --mint:#00B37E; --amber:#FF9900; --ink:#111210; --muted:#6B7280; --border:#E5E7EB; --white:#FFFFFF; --r:14px; }
+    body { font-family:'DM Sans',sans-serif; background:#F9F9F8; color:var(--ink); -webkit-font-smoothing:antialiased; }
+    nav { position:sticky; top:0; z-index:200; background:var(--white); border-bottom:1px solid var(--border); padding:0 16px; display:flex; align-items:center; justify-content:space-between; height:52px; }
+    .logo { font-family:'DM Serif Display',serif; font-size:20px; color:var(--ink); text-decoration:none; }
+    .logo span { color:var(--mint); }
+    .back { font-size:13px; color:var(--muted); text-decoration:none; }
+
+    .page-hero { background:var(--ink); padding:48px 20px 40px; text-align:center; }
+    .app-icon { width:80px; height:80px; background:var(--mint); border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:36px; }
+    .page-hero h1 { font-family:'DM Serif Display',serif; font-size:28px; color:white; margin-bottom:8px; }
+    .page-hero p { font-size:14px; color:#9CA3AF; max-width:280px; margin:0 auto; line-height:1.6; }
+
+    .content { max-width:480px; margin:0 auto; padding:28px 20px 60px; }
+
+    .download-card {
+      background:var(--white); border:2px solid var(--mint);
+      border-radius:var(--r); padding:24px 20px; text-align:center; margin-bottom:20px;
+    }
+    .download-card h2 { font-size:17px; font-weight:700; margin-bottom:6px; }
+    .download-card p { font-size:13px; color:var(--muted); margin-bottom:20px; line-height:1.5; }
+    .btn-download {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      background:var(--mint); color:white;
+      font-size:15px; font-weight:700; padding:15px 24px;
+      border-radius:var(--r); text-decoration:none; width:100%;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .btn-download:active { opacity:.85; }
+    .version-note { font-size:11px; color:var(--muted); margin-top:10px; }
+
+    .steps-title { font-family:'DM Serif Display',serif; font-size:18px; margin:28px 0 14px; }
+    .install-step {
+      display:flex; gap:14px; align-items:flex-start;
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--r); padding:14px; margin-bottom:10px;
+    }
+    .step-n { width:28px; height:28px; border-radius:50%; background:#F3F4F6; color:var(--ink); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .step-text h4 { font-size:13px; font-weight:600; margin-bottom:3px; }
+    .step-text p { font-size:12px; color:var(--muted); line-height:1.5; }
+
+    .warning-box {
+      background:#FFF7ED; border:1px solid #FED7AA;
+      border-radius:var(--r); padding:14px 16px; margin:20px 0;
+      font-size:13px; color:#92400E; line-height:1.6;
+    }
+    .warning-box strong { display:block; margin-bottom:4px; }
+
+    .features { margin:24px 0; }
+    .features h3 { font-family:'DM Serif Display',serif; font-size:18px; margin-bottom:14px; }
+    .feature { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; }
+    .feature-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+    .feature-text h4 { font-size:13px; font-weight:600; margin-bottom:2px; }
+    .feature-text p { font-size:12px; color:var(--muted); line-height:1.5; }
+
+    footer { padding:20px 16px 40px; border-top:1px solid var(--border); text-align:center; background:var(--white); }
+    footer p { font-size:11px; color:var(--muted); line-height:1.7; }
+    footer a { color:var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Deal<span>Mint</span></a>
+  <a href="index.html" class="back">← Back</a>
+</nav>
+
+<div class="page-hero">
+  <div class="app-icon">🌿</div>
+  <h1>DealMint for Android</h1>
+  <p>Get 6 real Amazon deals every 6 hours, directly on your phone.</p>
+</div>
+
+<div class="content">
+
+  <div class="download-card">
+    <h2>📱 Download APK</h2>
+    <p>Free download. No Play Store required.<br>Works on Android 8.0 and above.</p>
+    <!-- UPDATE THIS HREF ONCE YOU UPLOAD APK TO GITHUB -->
+    <a href="https://github.com/dinkan-lgtm/dealmint/releases/latest/download/dealmint.apk"
+       class="btn-download" id="apk-link">
+      ⬇️ Download DealMint.apk
+    </a>
+    <p class="version-note">Version 1.0 · ~8 MB · Android only</p>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ Before installing:</strong>
+    Android will ask you to allow installation from unknown sources. This is normal for apps not on the Play Store. See the steps below.
+  </div>
+
+  <div class="steps-title">How to Install</div>
+
+  <div class="install-step">
+    <div class="step-n">1</div>
+    <div class="step-text">
+      <h4>Download the APK</h4>
+      <p>Tap the download button above. The file will save to your Downloads folder.</p>
+    </div>
+  </div>
+  <div class="install-step">
+    <div class="step-n">2</div>
+    <div class="step-text">
+      <h4>Open the file</h4>
+      <p>Open your Files / Downloads app and tap on <strong>dealmint.apk</strong>.</p>
+    </div>
+  </div>
+  <div class="install-step">
+    <div class="step-n">3</div>
+    <div class="step-text">
+      <h4>Allow unknown sources</h4>
+      <p>If prompted, tap <strong>"Settings"</strong> and enable <strong>"Allow from this source"</strong>, then go back and tap Install.</p>
+    </div>
+  </div>
+  <div class="install-step">
+    <div class="step-n">4</div>
+    <div class="step-text">
+      <h4>Open DealMint</h4>
+      <p>Tap <strong>"Open"</strong> once installed. Deals load automatically — no login required.</p>
+    </div>
+  </div>
+
+  <div class="features">
+    <h3>What's in the app</h3>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-text"><h4>Auto-refresh every 6 hours</h4><p>Deals update automatically. Same deals as the website, always in sync.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✨</div>
+      <div class="feature-text"><h4>Hidden Finds tab</h4><p>Browse useful Amazon India products curated by our team.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🤖</div>
+      <div class="feature-text"><h4>AI price screening</h4><p>Every deal is verified against 90-day price history before it appears.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-text"><h4>No account needed</h4><p>Open the app and see deals. No signup, no tracking, no ads.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 DealMint &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="how-it-works.html">How It Works</a><br>
+  As an Amazon Associate we earn from qualifying purchases.</p>
+</footer>
+
+</body>
+</html>
