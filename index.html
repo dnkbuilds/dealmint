@@ -144,6 +144,9 @@
     .spinner { width:26px; height:26px; border:3px solid var(--border); border-top-color:var(--mint); border-radius:50%; animation:spin .7s linear infinite; margin:0 auto 10px; }
     @keyframes spin { to { transform:rotate(360deg); } }
 
+    .dc-amz { font-size:11px; color:var(--amber); font-weight:600; margin-top:4px; }
+    .fc-amz { font-size:10px; color:var(--amber); font-weight:600; margin-top:4px; }
+
     /* FOOTER */
     footer { padding:20px 16px 40px; border-top:1px solid var(--border); text-align:center; background:var(--white); }
     footer p { font-size:11px; color:var(--muted); line-height:1.7; }
@@ -177,6 +180,7 @@
   <a href="download.html" onclick="closeMenu()">📱 Download App</a>
   <a href="#newsletter" onclick="closeMenu()">📬 Get Notified</a>
   <a href="privacy.html" onclick="closeMenu()">🔒 Privacy Policy</a>
+  <a href="https://www.instagram.com/dealmintofficial" target="_blank" rel="noopener" onclick="closeMenu()">📷 Instagram</a>
   <div class="drawer-footer">© 2025 DealMint · Amazon Associate</div>
 </div>
 
@@ -258,7 +262,7 @@
 </div>
 
 <footer>
-  <p>© 2025 DealMint &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="how-it-works.html">How It Works</a> &nbsp;·&nbsp; <a href="download.html">Download App</a><br>
+  <p>© 2025 DealMint &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="how-it-works.html">How It Works</a> &nbsp;·&nbsp; <a href="download.html">Download App</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/dealmintofficial" target="_blank" rel="noopener">📷 @dealmintofficial</a><br>
   As an Amazon Associate we earn from qualifying purchases. Prices are approximate — always verify on Amazon.</p>
 </footer>
 
@@ -380,6 +384,7 @@ function renderDeals(deals) {
           ${s?`<div class="dc-save">Save ${s}</div>`:""}
           <div class="dc-title">${d.title}</div>
           ${d.rating>0?`<div class="dc-rat">${star(d.rating)} ${revs(d.reviews)}</div>`:""}
+          <div class="dc-amz">View on Amazon →</div>
         </div>
         <span class="dc-arr">›</span>
       </a>`;
@@ -400,6 +405,7 @@ function findCardHtml(f) {
           ${f.mrp>f.price?`<span class="fc-mrp">${fmt(f.mrp)}</span>`:""}
           ${p>0?`<span class="fc-disc">-${p}%</span>`:""}
         </div>
+        <div class="fc-amz">View on Amazon →</div>
       </div>
     </a>`;
 }
