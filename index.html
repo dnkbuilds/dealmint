@@ -192,9 +192,9 @@
 </nav>
 
 <div class="hero">
-  <div class="hero-pill"><span class="dot"></span>Updated every 6 hours</div>
+  <div class="hero-pill"><span class="dot"></span>New deals at 6 AM · 12 PM · 6 PM</div>
   <h1>Real Amazon deals.<br><em>Just 6 at a time.</em></h1>
-  <p class="hero-sub">No fake discounts. Handpicked from Amazon India.<br>Only deals with real value.</p>
+  <p class="hero-sub">No fake discounts. Handpicked from Amazon India.<br>Drops daily at 6 AM, 12 PM & 6 PM IST.</p>
   <div class="freshness"><span class="dot"></span><span id="freshness">Loading...</span></div>
 </div>
 
@@ -272,8 +272,33 @@ const SHEET_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwi9aL_csQQ
 const DEALS_CSV  = SHEET_BASE + "&gid=1674179055";
 const FINDS_CSV  = SHEET_BASE + "&gid=1778234759";
 const TAG        = "pickmash-21";
-const SLOT_MS    = 6 * 60 * 60 * 1000;
 const FINDS_PREVIEW = 4;
+
+// IST-based slot: 6AM=slot0, 12PM=slot1, 6PM=slot2
+// Factors in day of year so same time tomorrow shows different set
+function getISTDate() {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 5.5 * 3600000);
+}
+function getISTHour() { return getISTDate().getHours(); }
+function getDayOfYear() {
+  const d = getISTDate();
+  const start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d - start) / 86400000);
+}
+function currentSetIndex(total) {
+  const h = getISTHour();
+  const slotOfDay = h < 12 ? 0 : h < 18 ? 1 : 2;
+  return (getDayOfYear() * 3 + slotOfDay) % total;
+}
+function getNextSlot() {
+  const h = getISTHour();
+  if (h < 6)  return "6:00 AM";
+  if (h < 12) return "12:00 PM";
+  if (h < 18) return "6:00 PM";
+  return "6:00 AM tomorrow";
+}
 
 const FALLBACK_FINDS = [
   {title:"Plum Niacinamide Toner",asin:"B09PV4379W",price:395,mrp:440,img:"https://m.media-amazon.com/images/I/41BNihr3HwL._SL1001_.jpg",rating:4.2,reviews:12000,label:"Skincare"},
@@ -302,9 +327,7 @@ function closeMenu() {
 }
 function currentSetIndex(total) { return Math.floor(Date.now() / SLOT_MS) % total; }
 function updateFreshness() {
-  const left = SLOT_MS - (Date.now() % SLOT_MS);
-  const h = Math.floor(left/3600000), m = Math.floor((left%3600000)/60000);
-  document.getElementById("freshness").textContent = `Next refresh in ${h>0?h+"h ":""}${m}m`;
+  document.getElementById("freshness").textContent = `Next deals drop at ${getNextSlot()} IST`;
 }
 
 function splitLine(line) {
