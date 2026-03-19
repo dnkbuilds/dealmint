@@ -456,8 +456,9 @@ async function init() {
     const res  = await fetch(DEALS_CSV);
     const csv  = await res.text();
     const rows = parseCsv(csv,"deals");
-    const sets = [...new Set(rows.map(r=>r.set))].filter(Boolean).sort();
-    const setN = sets[currentSetIndex(sets.length)] || 1;
+    const sets = [...new Set(rows.map(r=>r.set))].filter(Boolean).sort((a,b)=>a-b);
+    const idx  = currentSetIndex(sets.length);
+    const setN = sets[idx] || sets[0];
     const set  = rows.filter(r=>r.set===setN);
     document.getElementById("set-label").textContent = "Updated today";
     const hero   = set.find(r=>r.slot==="hero");
