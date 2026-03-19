@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>DealMint — Real Amazon Deals, Just 6 at a Time</title> 
+  <title>DealMint — Real Amazon Deals, Just 6 at a Time</title>
   <meta name="description" content="Handpicked Amazon India deals updated every 6 hours. No fake discounts. Just 6 genuinely good deals."/>
   <meta name="theme-color" content="#111210"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -284,7 +284,7 @@ function getISTDate() {
 function getISTHour() { return getISTDate().getHours(); }
 function getDayOfYear() {
   const d = getISTDate();
-  const start = new Date(d.getFullYear(), 0, 0);
+  const start = new Date(d.getFullYear(), 0, 0); // Jan 1 = day 1, matches Java DAY_OF_YEAR
   return Math.floor((d - start) / 86400000);
 }
 function currentSetIndex(total) {
