@@ -325,7 +325,7 @@ function closeMenu() {
   ["drawer","overlay","ham"].forEach(id => document.getElementById(id).classList.remove("open"));
   document.body.style.overflow = "";
 }
-function currentSetIndex(total) { return Math.floor(Date.now() / SLOT_MS) % total; }
+
 function updateFreshness() {
   document.getElementById("freshness").textContent = `Next deals drop at ${getNextSlot()} IST`;
 }
@@ -455,11 +455,17 @@ async function init() {
   try {
     const res  = await fetch(DEALS_CSV);
     const csv  = await res.text();
+    console.log("CSV fetched, length:", csv.length);
     const rows = parseCsv(csv,"deals");
+    console.log("Rows parsed:", rows.length, rows);
     const sets = [...new Set(rows.map(r=>r.set))].filter(Boolean).sort((a,b)=>a-b);
+    console.log("Sets found:", sets);
     const idx  = currentSetIndex(sets.length);
+    console.log("Set index:", idx, "IST hour:", getISTHour(), "dayOfYear:", getDayOfYear());
     const setN = sets[idx] || sets[0];
+    console.log("Showing set:", setN);
     const set  = rows.filter(r=>r.set===setN);
+    console.log("Set rows:", set);
     document.getElementById("set-label").textContent = "Updated today";
     const hero   = set.find(r=>r.slot==="hero");
     const others = set.filter(r=>r.slot==="deal");
@@ -468,6 +474,7 @@ async function init() {
     if(others.length) renderDeals(others);
     else document.getElementById("deals-list").innerHTML = "";
   } catch(e) {
+    console.error("Deals load error:", e);
     document.getElementById("hero-wrap").innerHTML = `<p class="loading">Could not load deals. Please refresh.</p>`;
     document.getElementById("deals-list").innerHTML = "";
   }
