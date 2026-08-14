@@ -469,9 +469,18 @@ async function init() {
       const data = await r.json();
       const pool = (data.deals || []).map(mapWorkerDeal).filter(d => d.img && d.price > 0);
       if (pool.length) {
-        const perSet = 6, chunks = [];
-        for (let i = 0; i < pool.length; i += perSet) chunks.push(pool.slice(i, i + perSet));
-        const chunk  = chunks[currentSetIndex(chunks.length)] || chunks[0];
+        // Sliding-window rotation: each slot advances by 6, wrapping around.
+        // Consecutive slots share NO items as long as the pool has ≥12 products.
+        // With fewer products (e.g. 6), some overlap is unavoidable — the pool
+        // is just too small. Fix: add more URLs to the Links sheet.
+        const perSet = 6;
+        const total  = pool.length;
+        // Slot counter that ticks every 6 hours (matches your site's 6AM/12PM/6PM rotation)
+        const slotCounter = getDayOfYear() * 3 + (getISTHour() < 12 ? 0 : getISTHour() < 18 ? 1 : 2);
+        const start  = (slotCounter * perSet) % total;
+        // Take 6 starting at `start`, wrapping around the end of the pool
+        const chunk  = Array.from({length: Math.min(perSet, total)},
+                                  (_, i) => pool[(start + i) % total]);
         const hero   = chunk[0], others = chunk.slice(1);
         document.getElementById("set-label").textContent = "Live deals";
         if (hero) renderHero(hero);
