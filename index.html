@@ -272,6 +272,10 @@ const SHEET_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwi9aL_csQQ
 const DEALS_CSV  = SHEET_BASE + "&gid=1674179055";
 const FINDS_CSV  = SHEET_BASE + "&gid=1778234759";
 const TAG        = "pickmash-21";
+// After your Cloudflare Worker is live, paste its base URL here (no trailing slash),
+// e.g. "https://dealmint-links.yourname.workers.dev".
+// Leave it "" and the site behaves EXACTLY as before (reads the Google Sheet).
+const WORKER_URL = "https://dealmint-links.hishammubarakpk.workers.dev";
 const FINDS_PREVIEW = 4;
 
 // IST-based slot: 6AM=slot0, 12PM=slot1, 6PM=slot2
@@ -449,10 +453,37 @@ function handleNL(e) {
   document.getElementById("email-in").value = "";
 }
 
+// Map a Worker /deals item into the shape the render functions expect.
+function mapWorkerDeal(d) {
+  return { asin:d.asin, price:d.price, mrp:d.mrp, title:d.title, img:d.image, rating:0, reviews:0 };
+}
+
 async function init() {
   updateFreshness();
   setInterval(updateFreshness, 60000);
-  try {
+  // ── Try the Worker (live, auto-priced deals from your Links sheet) first ──
+  let dealsRendered = false;
+  if (WORKER_URL) {
+    try {
+      const r = await fetch(WORKER_URL.replace(/\/+$/,"") + "/deals");
+      const data = await r.json();
+      const pool = (data.deals || []).map(mapWorkerDeal).filter(d => d.img && d.price > 0);
+      if (pool.length) {
+        const perSet = 6, chunks = [];
+        for (let i = 0; i < pool.length; i += perSet) chunks.push(pool.slice(i, i + perSet));
+        const chunk  = chunks[currentSetIndex(chunks.length)] || chunks[0];
+        const hero   = chunk[0], others = chunk.slice(1);
+        document.getElementById("set-label").textContent = "Live deals";
+        if (hero) renderHero(hero);
+        if (others.length) renderDeals(others);
+        else document.getElementById("deals-list").innerHTML = "";
+        dealsRendered = true;
+      }
+    } catch(e) { console.warn("Worker deals unavailable, using Sheet:", e); }
+  }
+
+  // ── Fallback: existing Google Sheet logic (unchanged) ──
+  if (!dealsRendered) try {
     const res  = await fetch(DEALS_CSV);
     const csv  = await res.text();
     console.log("CSV fetched, length:", csv.length);
